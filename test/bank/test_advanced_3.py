@@ -26,3 +26,17 @@ def test_transactions(my_account, added, withdrawn, remaining):
     my_account.add_cash(added)
     my_account.withdraw_cash(withdrawn)
     assert my_account.balance == remaining
+
+
+@pytest.mark.parametrize(
+    "added,withdrawn", 
+    [
+        (5, 26), 
+        (3, 100), 
+        (8, 31)
+    ]
+)
+def test_invalid_transactions(my_account, added, withdrawn):
+    my_account.add_cash(added)
+    with pytest.raises(InsufficientBalance):
+        my_account.withdraw_cash(withdrawn)
